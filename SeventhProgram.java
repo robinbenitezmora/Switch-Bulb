@@ -5,8 +5,10 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
@@ -68,52 +70,36 @@ class GUI extends JFrame implements Constants, ActionListener {
   
   for (int i = 0; i < switchstate.length; i++) {
    switches[i].addMouseListener((MouseListener) new MouseAdapter() {
-    // Rest of the code...
+    public void mouseClicked(MouseEvent e) {
+     if (switchstate[j]) {
+      if (ON_RECTANGLE.contains(e.getX(), getY()));
+      switchstate[j] = false;
+     }
+     else {
+      if (OFF_RECTANGLE.contains(e.getX(), getY()));
+      switchstate[j] = true;
+     }
+     paintStuff();
+    }
    });
   }
 
-  card1 = new JPanel();
-  card1.setLayout(new GridLayout(1, 3));
-  for (int i = 0; i < 3; i++) {
-   card1.add(bulbPans[i]);
+  top.setBackground(Color.BLACK);
+  bot.setBackground(Color.BLACK);
+
+  for (int i = 0; i < switches.length; i++) {
+   top.add(switches[i]);
+
+  goToRoom = new JButton("Go to room", new ImageIcon("door_closed.jpg"));
+  goToRoom.addActionListener(this);
+  goToRoom.setRolloverIcon(new ImageIcon("door_open.jpg"));
+
+  bot.add(goToRoom);
+
+  card1.add(top, BorderLayout.CENTER);
+  card1.add(bot, BorderLayout.SOUTH);
   }
 
-  card2 = new JPanel();
-  card2.setLayout(new GridLayout(1, 3));
-  for (int i = 0; i < 3; i++) {
-   card2.add(bulbPans[i]);
+ public void initCard2() {
+
   }
-
-  card3 = new JPanel();
-  card3.setLayout(new GridLayout(1, 3));
-  for (int i = 0; i < 3; i++) {
-   card3.add(bulbPans[i]);
-  }
-
-  cards = new JPanel(new CardLayout());
-  cards.add(card1, "card1");
-  cards.add(card2, "card2");
-  cards.add(card3, "card3");
-
-  add(cards, BorderLayout.CENTER);
-
-  JPanel buttonPanel = new JPanel();
-  JButton card1Button = new JButton("Card 1");
-  card1Button.addActionListener(this);
-  buttonPanel.add(card1Button);
-
-  JButton card2Button = new JButton("Card 2");
-  card2Button.addActionListener(this);
-  buttonPanel.add(card2Button);
-
-  JButton card3Button = new JButton("Card 3");
-  card3Button.addActionListener(this);
-  buttonPanel.add(card3Button);
-
-  add(buttonPanel, BorderLayout.SOUTH);
- }
-
- public void actionPerformed(ActionEvent e) {
-  // Handle action events here
- }
-}
