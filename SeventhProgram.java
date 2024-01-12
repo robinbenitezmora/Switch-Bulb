@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.CardLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -30,6 +31,8 @@ class GUI extends JFrame implements Constants, ActionListener {
  JPanel card1, card2, card3;
  JPanel[] bulbPans = new JPanel[3];
 
+ JButton goToRoom, back;
+ JLabel[] switches = new JLabel[3];
  ImageIcon switchonIMG, switchoffIMG;
  JLabel[] bulbs = new JLabel[3];
 
@@ -55,14 +58,18 @@ class GUI extends JFrame implements Constants, ActionListener {
   JPanel top = new JPanel(new FlowLayout(FlowLayout.CENTER));
   JPanel bot = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
-  switchonIMG = new ImageIcon("switchon.png");
-  switchoffIMG = new ImageIcon("switchoff.png");
+  card1 = new JPanel(new BorderLayout());
 
-  for (int i = 0; i < 3; i++) {
-   switchstate[i] = false;
-   bulbs[i] = new JLabel(switchoffIMG);
-   bulbPans[i] = new JPanel();
-   bulbPans[i].add(bulbs[i]);
+  switchonIMG = new ImageIcon("switchon.jpg", "switch1.jpg");
+  switchoffIMG = new ImageIcon("switchoff.jpg", "switch2.jpg");
+
+  for (int i = 0; i < switches.length; i++) {
+   switches[i] = new JLabel(switchoffIMG);
+  
+  for (int i = 0; i < switchstate.length; i++) {
+   switches[i].addMouseListener((MouseListener) new MouseAdapter() {
+    // Rest of the code...
+   });
   }
 
   card1 = new JPanel();
